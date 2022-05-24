@@ -8,6 +8,7 @@ export class PlugboardConfig{
     }
 
     printConfig = () => {
+        console.log("Plugboard configuration:")
     	console.log(this.config);
     }
 

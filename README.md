@@ -22,7 +22,9 @@ TypeScript Enigma Help!
 Usage: ts-node .\\Main.ts [-msg] [-p] [-mtr] [-rftr]
 
 Options:
-    -msg        Message you wish to encrypt with the enigma machine
+    -msg        Message you wish to encrypt with the enigma machine. Only alphabetical
+                characters will be encrypted. All others, including numbers and white
+                spaces, will be left as is.
                 Leave blank to use "Test Message"
 
     -p          Plug board configuration. Expected to be a string of 26 letters,

@@ -42,9 +42,9 @@ export class Enigma {
     }
 
     encodeMessage = (message: string): string => {
-        var encoded = "";
-        var pass = message.toUpperCase();
-        for(var i=0; i<pass.length; i++){
+        let encoded = "";
+        let pass = message.toUpperCase();
+        for(let i=0; i<pass.length; i++){
             encoded = encoded + this.typeCharacter(pass.charAt(i));
         }
         return encoded;

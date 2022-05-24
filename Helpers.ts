@@ -12,7 +12,7 @@ function getRandomInt(max: number) {
 }
   
 export function generatePlugboard(plugOrder?: string){
-      var pairs: [string, string][] = [];
+      let pairs: [string, string][] = [];
   
       if(plugOrder){
           let myOrder = "" + plugOrder;
@@ -25,7 +25,8 @@ export function generatePlugboard(plugOrder?: string){
               pairs.push([first, second]);
           }
       }else{
-          var alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+          console.log("No plugboard config provided. Generating random config...");
+          let alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
           while(alpha.length > 0){
               let first = alpha[getRandomInt(alpha.length)];
               alpha = alpha.filter(a => a != first);
@@ -71,6 +72,7 @@ function pickFreshMotor(usedMotors: Set<motorSelection>){
 
 function stringToMotorDefs(motorDefs?: string){
 	if(motorDefs == undefined){
+        console.log("Motor configs not provided. Generating random configs...");
 		return [];
 	}
 	let nums = motorDefs.split(",");
@@ -86,7 +88,7 @@ function stringToMotorDefs(motorDefs?: string){
 	return ret;
 }
 
-export function argSplitter(args: string[]): {message: string | undefined, plugboard: PlugboardConfig, motors: Motor[], reflector: ReflectorType | undefined}{
+export function argSplitter(args: string[]): {message: string | undefined, plugboard: PlugboardConfig | null, motors: Motor[], reflector: ReflectorType | undefined}{
     let message: string | undefined= undefined;
     let plugboardStr: string | undefined = undefined;
     let motorsStr: string | undefined= undefined;
@@ -138,10 +140,11 @@ export function argSplitter(args: string[]): {message: string | undefined, plugb
             }
         }
     }else{
+        console.log("Reflector type not provided. Selecting type at random...");
         reflector = getRandomInt(2) == 1 ? 'B' : 'C';
     }
 
-    let plugboard = generatePlugboard(plugboardStr);
+    let plugboard = plugboardStr !== "none" ? generatePlugboard(plugboardStr) : null;
     let motors = produceMotors(stringToMotorDefs(motorsStr));
 
     return { message, plugboard, motors, reflector };
@@ -153,7 +156,9 @@ TypeScript Enigma Help!
 Usage: ts-node .\\Main.ts [-msg] [-p] [-mtr] [-rftr]
 
 Options:
-    -msg        Message you wish to encrypt with the enigma machine
+    -msg        Message you wish to encrypt with the enigma machine. Only alphabetical
+                characters will be encrypted. All others, including numbers and white
+                spaces, will be left as is.
                 Leave blank to use "Test Message"
 
     -p          Plug board configuration. Expected to be a string of 26 letters,
