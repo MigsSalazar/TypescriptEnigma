@@ -22,20 +22,18 @@ TypeScript Enigma Help!
 Usage: ts-node .\\Main.ts [-msg] [-p] [-mtr] [-rftr]
 
 Options:
-    -msg        Message you wish to encrypt with the enigma machine. Only alphabetical
-                characters will be encrypted. All others, including numbers and white
-                spaces, will be left as is.
+    -msg        Message you wish to encrypt with the enigma machine
                 Leave blank to use "Test Message"
 
-    -p          Plug board configuration. Expected to be a string of 26 letters,
-                where each letter of the alphabet is used once, and each 2 letters
-                creates a plug board pair.
+    -p          Plug board configuration. Expected to be "none" or a string of 
+                26 letters, where each letter of the alphabet is used once, and 
+                each 2 letters creates a plug board pair.
                 Example: 
                     ABCDEF... 
                     will create plug board pairs of 
                     A<->B, C<->D, E<->F...
-                If flag not provided, then no plug board will be used.
-                If set to empty string "", a random configuration will be used. 
+                If flag not provided, then a random plugboard configuration will be used.
+                If set to "none", a plugboard will not be used.
 
     -mtr        Motor configuration. Expects a comma delimited list of 3-5 motor
                 motor configurations where each motor configuration is a tuple of 
