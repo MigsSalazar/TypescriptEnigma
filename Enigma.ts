@@ -30,7 +30,7 @@ export class Enigma {
         //wiring schematic taken from here https://www.cs.cornell.edu/courses/cs3110/2016fa/a1/a1.html
         let curLetter = this.plugBoard ? this.plugBoard.passthrough(letter) : letter;
         
-        curLetter = this.motors[0].runForwardChain(letter);
+        curLetter = this.motors[0].runForwardChain(curLetter);
 
         curLetter = this.reflectors[this.reflector][alphabet.indexOf(curLetter)];
 

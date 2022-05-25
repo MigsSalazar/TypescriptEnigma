@@ -1,0 +1,27 @@
+{
+  "name": "typescriptenigma",
+  "description": "Hi y'all! So I thought I'd have some fun and made myself a TypeScript Enigma Machine!",
+  "version": "1.0.0",
+  "main": "Main.ts",
+  "scripts": {
+    "encode": "echo npm doesn't behave well with flagged arguments. Use 'npx ts-node Main.ts [--args]' for a local ts-node install or 'ts-node Main.ts [--args]' if installed globally",
+    "dencode": "echo npm doesn't behave well with flagged arguments. Use 'npx ts-node Main.ts -decode [--args]' for a local ts-node install or 'ts-node Main.ts -decode [--args]' if installed globally",
+	"help": "ts-node Main.ts -help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MigsSalazar/TypescriptEnigma.git"
+  },
+  "author": "Miguel Salazar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MigsSalazar/TypescriptEnigma/issues"
+  },
+  "homepage": "https://github.com/MigsSalazar/TypescriptEnigma#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "ts-node": "^10.8.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.2"
+  }
+}

@@ -88,8 +88,16 @@ function stringToMotorDefs(motorDefs?: string){
 	return ret;
 }
 
-export function argSplitter(args: string[]): {message: string | undefined, plugboard: PlugboardConfig | null, motors: Motor[], reflector: ReflectorType | undefined}{
-    let message: string | undefined= undefined;
+export interface EnigmaConfiguration{
+	message: string | undefined;
+	plugboard: PlugboardConfig | null;
+	motors: Motor[];
+	reflector: ReflectorType | undefined;
+	decodeOnly: boolean;
+}
+
+export function argSplitter(args: string[]): EnigmaConfiguration{
+	let message: string | undefined= undefined;
     let plugboardStr: string | undefined = undefined;
     let motorsStr: string | undefined= undefined;
     let reflector: ReflectorType | undefined = undefined;
@@ -97,7 +105,16 @@ export function argSplitter(args: string[]): {message: string | undefined, plugb
     let msgIdx = args.findIndex(a => a == "-msg");
     let plgbrdIdx = args.findIndex(a => a == "-p");
     let mtrIdx = args.findIndex(a => a == "-mtr");
-    let rftrIdx = args.findIndex(a => a == "-rftr")
+    let rftrIdx = args.findIndex(a => a == "-rftr");
+
+	let decode = args.findIndex(a => a =="-decode");
+	let decodeOnly = false;
+	if(decode > -1){
+		if(plgbrdIdx == -1 || msgIdx == -1 || rftrIdx == -1){
+			throw new TypeError("Cannot decode a message without all configurations provided along with the message.");
+		}
+		decodeOnly = true;
+	}
 
     if(msgIdx > -1){
         if(args.length > (msgIdx + 1) && args[msgIdx + 1] != "-p" && args[msgIdx + 1] != "-mtr"){
@@ -147,7 +164,7 @@ export function argSplitter(args: string[]): {message: string | undefined, plugb
     let plugboard = plugboardStr !== "none" ? generatePlugboard(plugboardStr) : null;
     let motors = produceMotors(stringToMotorDefs(motorsStr));
 
-    return { message, plugboard, motors, reflector };
+    return { message, plugboard, motors, reflector, decodeOnly };
 }
 
 export function printHelp(){

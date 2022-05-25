@@ -9,13 +9,13 @@ export class PlugboardConfig{
 
     printConfig = () => {
         console.log("Plugboard configuration:")
-    	console.log(this.config);
+    	console.log(this.config.reduce((prev, cur) => [...prev, cur[0], cur[1]], [] as string[]).reduce((p,c) => p+c));
     }
 
     passthrough = (letter: string) => {
-        let filtered = this.config.filter(pair => pair[0] == letter || pair[1] == letter);
-        let first = filtered[0];
-        return first[0] == letter ? first[1] : first[0];
+        let plug = this.config.find(pair => pair[0] == letter || pair[1] == letter)!;
+		let result = plug[0] == letter ? plug[1] : plug[0]
+        return result;
     }
 
     private verifyPlugboard = (config: [string, string][]) => {
