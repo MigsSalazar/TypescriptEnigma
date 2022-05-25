@@ -185,13 +185,13 @@ Options:
 			be encoded and then decoded. WARNING: ALL OTHER ARGS MUST BE
 			PROVIDED. 
 	
-	-f 			Marks the provided message string as a file path. Does nothing
+	-f 		Marks the provided message string as a file path. Does nothing
 			if a message is not provided
 
 	-msg		Message you wish to encrypt with the enigma machine
 			Leave blank to use "Test Message"
 
-	-p 			Plug board configuration. Expected to be "none" or a string of 
+	-p 		Plug board configuration. Expected to be "none" or a string of 
 			26 letters, where each letter of the alphabet is used once, and 
 			each 2 letters creates a plug board pair.
 			Example: 
