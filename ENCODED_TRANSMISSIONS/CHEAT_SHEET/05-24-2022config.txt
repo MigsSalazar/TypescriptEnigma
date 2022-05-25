@@ -1,0 +1,3 @@
+Motor Settngs: 8,19,6,17,7,1
+Plugboard Config: YERGBIWJFZXLOUCVMHKDSNQPTA
+Reflector Type: B

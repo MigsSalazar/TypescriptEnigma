@@ -6,6 +6,7 @@ import {
 	getMotor
 } from "./Motor";
 import {PlugboardConfig} from "./PlugboardConfig";
+import * as fs from 'fs';
 
 function getRandomInt(max: number) {
 	return Math.floor(Math.random() * Math.floor(max));
@@ -96,6 +97,8 @@ export interface EnigmaConfiguration{
 	decodeOnly: boolean;
 }
 
+const flags = ["-msg", "-f", "-p", "-mtr", "-decode", "-rftr"];
+
 export function argSplitter(args: string[]): EnigmaConfiguration{
 	let message: string | undefined= undefined;
 	let plugboardStr: string | undefined = undefined;
@@ -103,6 +106,7 @@ export function argSplitter(args: string[]): EnigmaConfiguration{
 	let reflector: ReflectorType | undefined = undefined;
 
 	let msgIdx = args.findIndex(a => a == "-msg");
+	let isFileFlag = args.findIndex(a => a == "-f");
 	let plgbrdIdx = args.findIndex(a => a == "-p");
 	let mtrIdx = args.findIndex(a => a == "-mtr");
 	let rftrIdx = args.findIndex(a => a == "-rftr");
@@ -117,8 +121,12 @@ export function argSplitter(args: string[]): EnigmaConfiguration{
 	}
 
 	if(msgIdx > -1){
-		if(args.length > (msgIdx + 1) && args[msgIdx + 1] != "-p" && args[msgIdx + 1] != "-mtr"){
-			message = args[msgIdx + 1];
+		if(args.length > (msgIdx + 1) && !flags.includes(args[msgIdx + 1])){
+			if(isFileFlag > -1){
+				message = fs.readFileSync(args[msgIdx + 1],'utf8');
+			}else{
+				message = args[msgIdx + 1];
+			}
 		}else{
 			throw new TypeError("Message flag must be followed by a message");
 		}
@@ -127,7 +135,7 @@ export function argSplitter(args: string[]): EnigmaConfiguration{
 	if(plgbrdIdx > -1){
 		if(args.length <= (plgbrdIdx + 1) ){
 			throw new TypeError("Plugboard flag must be followed by a plugboard configuration");
-		}else if( args[plgbrdIdx + 1] != "-msg" && args[plgbrdIdx + 1] != "-mtr"){
+		}else if(!flags.includes(args[plgbrdIdx + 1])){
 			plugboardStr = args[plgbrdIdx + 1];
 		}else{
 			throw new TypeError("Plugboard flag cannot be followed by another flag");
@@ -137,7 +145,7 @@ export function argSplitter(args: string[]): EnigmaConfiguration{
 	if(mtrIdx > -1){
 		if(args.length <= (mtrIdx + 1) ){
 			throw new TypeError("Motor flag must be followed by a motor configuration");
-		}else if( args[mtrIdx + 1] != "-msg" && args[mtrIdx + 1] != "-mtr"){
+		}else if(!flags.includes(args[mtrIdx + 1])){
 			motorsStr = args[mtrIdx + 1];
 		}else{
 			throw new TypeError("Motor config flag cannot be followed by another flag");
@@ -170,13 +178,16 @@ export function argSplitter(args: string[]): EnigmaConfiguration{
 export function printHelp(){
 	console.log(`
 TypeScript Enigma Help!
-Usage: ts-node .\\Main.ts [-decode] [-msg] [-p] [-mtr] [-rftr]
+Usage: ts-node .\\Main.ts [-decode] [-f] [-msg] [-p] [-mtr] [-rftr]
 
 Options:
 	-decode 	Sets the machine to work in decode mode only. Message will not
 				be encoded and then decoded. WARNING: ALL OTHER ARGS MUST BE
 				PROVIDED. 
-				
+	
+	-f 			Marks the provided message string as a file path. Does nothing
+				if a message is not provided
+
 	-msg		Message you wish to encrypt with the enigma machine
 				Leave blank to use "Test Message"
 
