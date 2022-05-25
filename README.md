@@ -19,9 +19,13 @@ If you want a break down on how to run the code, you can use the
 Or just read it down below because I just copy pasted what the help command spits out below.
 ```
 TypeScript Enigma Help!
-Usage: ts-node .\\Main.ts [-msg] [-p] [-mtr] [-rftr]
+Usage: ts-node .\\Main.ts [-decode] [-msg] [-p] [-mtr] [-rftr]
 
 Options:
+	-decode 	Sets the machine to work in decode mode only. Message will not
+				be encoded and then decoded. WARNING: ALL OTHER ARGS MUST BE
+				PROVIDED. 
+				
     -msg        Message you wish to encrypt with the enigma machine
                 Leave blank to use "Test Message"
 

@@ -170,9 +170,13 @@ export function argSplitter(args: string[]): EnigmaConfiguration{
 export function printHelp(){
     console.log(`
 TypeScript Enigma Help!
-Usage: ts-node .\\Main.ts [-msg] [-p] [-mtr] [-rftr]
+Usage: ts-node .\\Main.ts [-decode] [-msg] [-p] [-mtr] [-rftr]
 
 Options:
+	-decode 	Sets the machine to work in decode mode only. Message will not
+				be encoded and then decoded. WARNING: ALL OTHER ARGS MUST BE
+				PROVIDED. 
+				
     -msg        Message you wish to encrypt with the enigma machine
                 Leave blank to use "Test Message"
 
